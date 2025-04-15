@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
+import QuestionForm from "../components/QuestionForm";
+import UserList from "../components/UserList";
 
 export default function Home() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [question, setQuestion] = useState("");
-  const [answer, setAnswer] = useState("");
 
   useEffect(() => {
     fetch("http://localhost:8000/api/data")
@@ -19,55 +19,22 @@ export default function Home() {
       });
   }, []);
 
-  const handleAskQuestion = async () => {
-    try {
-      const response = await fetch("http://localhost:8000/api/ai", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ question }),
-      });
-      const data = await response.json();
-      setAnswer(data.answer);
-    } catch (error) {
-      console.error("Error in AI request:", error);
-    }
-  };
-
   return (
-    <div style={{ padding: "2rem" }}>
-      <h1>Next.js + FastAPI Sample</h1>
+    <div className="p-8">
+      <h1 className="text-4xl font-bold text-center mb-4">Next.js + FastAPI Sample</h1>
 
-      <section style={{ marginBottom: "2rem" }}>
-        <h2>Dummy Data</h2>
+      <section className="mb-8">
+        <h2 className="text-2xl font-semibold text-gray-700">Dummy Data</h2>
         {loading ? (
           <p>Loading...</p>
         ) : (
-          <ul>
-            {users.map((user) => (
-              <li key={user.id}>
-                {user.name} - {user.role}
-              </li>
-            ))}
-          </ul>
+          <UserList users={users} />
         )}
       </section>
 
       <section>
-        <h2>Ask a Question (AI Endpoint)</h2>
-        <div>
-          <input
-            type="text"
-            placeholder="Enter your question..."
-            value={question}
-            onChange={(e) => setQuestion(e.target.value)}
-          />
-          <button onClick={handleAskQuestion}>Ask</button>
-        </div>
-        {answer && (
-          <div style={{ marginTop: "1rem" }}>
-            <strong>AI Response:</strong> {answer}
-          </div>
-        )}
+        <h2 className="text-3xl font-bold text-center text-blue-600 mb-4">Ask a Question (AI Endpoint)</h2>
+        <QuestionForm />
       </section>
     </div>
   );
