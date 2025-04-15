@@ -10,12 +10,30 @@ dummy_path = Path(__file__).resolve().parent.parent / "data" / "dummyData.json"
 with open(dummy_path, "r") as f:
     DUMMY_DATA = json.load(f)
 
-@router.get("/api/data")
-def get_data():
+@router.get("/api/sales-reps")
+def get_sales_reps():
     """
-    Returns dummy data (e.g., list of users).
+    Returns a list of sales representatives with their details.
     """
-    return DUMMY_DATA
+    sales_reps = [
+        {
+            "name": rep["name"],
+            "role": rep["role"],
+            "region": rep["region"],
+            "skills": rep["skills"],
+            "deals": rep["deals"],
+            "clients": [
+                {
+                    "name": client["name"],
+                    "industry": client["industry"],
+                    "contact": client["contact"]
+                }
+                for client in rep["clients"]
+            ]
+        }
+        for rep in DUMMY_DATA["salesReps"]
+    ]
+    return {"salesReps": sales_reps}
 
 @router.post("/api/ai", response_model=AIResponse)
 async def ai_endpoint(payload: AIRequest):
