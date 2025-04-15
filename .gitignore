@@ -10,3 +10,20 @@ ioenv/
 
 # VSCode settings
 .vscode/
+
+# Node modules
+node_modules/
+
+# Next.js build output
+.next/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Tailwind output (if using output CSS)
+*.css.map
+
+# dotenv environment variables
+.env*
