@@ -1,4 +1,5 @@
 from fastapi import APIRouter
+from typing import Optional, List
 from models.schemas import AIRequest, AIResponse
 import json
 from pathlib import Path
@@ -34,6 +35,73 @@ def get_sales_reps():
         for rep in DUMMY_DATA["salesReps"]
     ]
     return {"salesReps": sales_reps}
+
+
+@router.get("/api/sales-summary")
+def get_sales_summary(
+    region: Optional[str] = None,
+    role: Optional[str] = None,
+    status: Optional[str] = None
+):
+    """
+    Provides a summary of sales representatives and their activities.
+
+    Returns:
+        - totalSalesReps (int): Total number of sales representatives.
+        - filteredSalesReps (int): Number of sales representatives after applying filters.
+        - roles (list): Unique roles of the sales representatives.
+        - regions (list): Unique regions covered by the sales representatives.
+        - uniqueSkills (list): Unique skills across all sales representatives.
+        - totalDeals (int): Total number of deals across all sales representatives.
+        - totalClients (int): Total number of unique clients.
+        - totalValue (int): Total value of all deals.
+        - statusBreakdown (dict): Breakdown of deal statuses (e.g., Closed Won, In Progress).
+        - industries (list): Unique industries of the clients.
+    """
+    all_reps = DUMMY_DATA["salesReps"]
+    filtered_reps = all_reps
+
+    # Apply filters to reps
+    if region:
+        filtered_reps = [rep for rep in filtered_reps if rep["region"].lower() == region.lower()]
+    if role:
+        filtered_reps = [rep for rep in filtered_reps if rep["role"].lower() == role.lower()]
+
+    total_deals = 0
+    total_value = 0
+    status_count = {}
+    skills_set = set()
+    industries_set = set()
+    clients_seen = set()
+
+    for rep in filtered_reps:
+        for deal in rep["deals"]:
+            if status and deal["status"].lower() != status.lower():
+                continue
+            total_deals += 1
+            total_value += deal["value"]
+            status_count[deal["status"]] = status_count.get(deal["status"], 0) + 1
+        for skill in rep["skills"]:
+            skills_set.add(skill)
+        for client in rep["clients"]:
+            industries_set.add(client["industry"])
+            clients_seen.add(client["name"])
+
+    summary = {
+        "totalSalesReps": len(all_reps),
+        "filteredSalesReps": len(filtered_reps),
+        "roles": list({rep["role"] for rep in filtered_reps}),
+        "regions": list({rep["region"] for rep in filtered_reps}),
+        "uniqueSkills": sorted(list(skills_set)),
+        "totalDeals": total_deals,
+        "totalClients": len(clients_seen),
+        "totalValue": total_value,
+        "statusBreakdown": status_count,
+        "industries": sorted(list(industries_set))
+    }
+
+    return summary
+
 
 @router.post("/api/ai", response_model=AIResponse)
 async def ai_endpoint(payload: AIRequest):
