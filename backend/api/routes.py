@@ -23,8 +23,7 @@ async def ai_endpoint(payload: AIRequest):
     Accepts a user question and returns a placeholder AI response.
     (Optionally integrate a real AI model or external service here.)
     """
-    body = await payload.json()
-    user_question = body.get("question", "")
+    user_question = payload.question
     
     # Placeholder logic: echo the question or generate a simple response
     # Replace with real AI logic as desired (e.g., call to an LLM).

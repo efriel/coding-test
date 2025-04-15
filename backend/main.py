@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI
 from middleware.cors import setup_cors
 from api.routes import router as api_router
 
