@@ -29,24 +29,18 @@ export default function Home() {
           InterOpera AI
         </h1>
 
-        <section className="mb-8">
-          <h2 className="text-2xl font-semibold text-gray-700">Dummy Data</h2>
-          {loading ? (
-            <p>Loading...</p>
-          ) : (
-            <UserList users={users} />
-          )}
+        <section className="mb-8 p-4">
+        {/* Use the SalesCards component */}
+        <SalesCards salesReps={salesReps} loading={loading} />
         </section>
 
-        <section>
+        <section className="mb-8 p-4">
           <h2 className="text-3xl font-bold text-center text-violet-300 mb-4">
             Ask a Question (AI Endpoint)
           </h2>
           <QuestionForm />
         </section>
-
-        {/* Use the SalesCards component */}
-        <SalesCards salesReps={salesReps} loading={loading} />
+        
       </main>
     </div>
   );

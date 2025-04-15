@@ -19,25 +19,29 @@ const QuestionForm = () => {
   };
 
   return (
-    <div>
+    <div className="flex flex-col items-center justify-center col-sm-6">
+    <div className="flex w-full items-center bg-[#1c212a] shadow-md rounded-full px-4 py-2 border border-gray-800">
       <input
+        id="question"
         type="text"
-        placeholder="Enter your question..."
+        placeholder="e.g., Which rep closed the highest deal?"
         value={question}
         onChange={(e) => setQuestion(e.target.value)}
-        className="p-2 border border-gray-300 rounded-md w-full mb-4"
+        className="w-full outline-none bg-transparent px-2 py-1 text-gray-50 placeholder-gray-400"
       />
       <button
         onClick={handleAskQuestion}
-        className="px-4 py-2 bg-blue-600 text-white rounded-md"
+        className="bg-[radial-gradient(circle,_#dd519a,_#b34bf0)] text-white px-3 py-1 rounded-full hover:bg-indigo-700 transition"
       >
-        Ask
+        ➤
       </button>
-      {answer && (
-        <div className="mt-4">
-          <strong>AI Response:</strong> {answer}
-        </div>
-      )}
+    </div>
+    {answer && (
+      <div className="w-full mt-4 bg-gray-800 text-white rounded-lg shadow-md">
+        <h3 className="text-lg font-semibold">AI Response:</h3> 
+        <p>{answer}</p>
+      </div>
+    )}
     </div>
   );
 };
