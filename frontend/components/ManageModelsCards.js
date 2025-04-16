@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { CheckCircle, Cpu } from "lucide-react";
 
 const availableModels = [
@@ -7,12 +7,15 @@ const availableModels = [
   { id: "custom", name: "Custom InterOpera.AI", description: "Available Soon" },
 ];
 
-export default function ManageModelsCards({ selectedModel, onSelect }) {
-  const [currentModel, setCurrentModel] = useState(selectedModel || "");
+export default function ManageModelsCards({ selectedModel = "no-selection", onSelect }) {
+  const [currentModel, setCurrentModel] = useState(selectedModel);
 
   const handleSelect = (modelId) => {
     setCurrentModel(modelId);
-    if (onSelect) onSelect(modelId);
+    if (onSelect) {
+      console.log("onSelect called with:", modelId);  // Debugging line
+      onSelect(modelId);
+    }
   };
 
   return (

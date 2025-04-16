@@ -1,3 +1,5 @@
+import React from 'react';
+
 const ResponseCards = ({ answer, setAnswer }) => {
   return (
     <div className="w-full mt-4 bg-gray-900 text-white rounded-lg shadow-md p-4 relative">

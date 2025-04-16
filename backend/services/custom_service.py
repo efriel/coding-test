@@ -34,11 +34,11 @@ def ask_custom_model(prompt: str) -> str:
     >>> print(response)
     """
     try:
-        response = requests.post(
-            settings.CUSTOM_AI_URL,  # Custom AI service endpoint
-            json={"prompt": prompt}  # Send the prompt as JSON
-        )
-        response.raise_for_status()  # Raise an error for HTTP status codes >= 400
+        #response = requests.post(
+        #    settings.CUSTOM_AI_URL,  # Custom AI service endpoint
+        #    json={"prompt": prompt}  # Send the prompt as JSON
+        #)
+        #response.raise_for_status()  # Raise an error for HTTP status codes >= 400
         return f"Searching in custom AI model will be available soon."
     except requests.exceptions.RequestException as e:
         return f"Error communicating with the custom AI model: {str(e)}"

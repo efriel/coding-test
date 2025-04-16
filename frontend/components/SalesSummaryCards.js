@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState, useEffect } from "react";
 import { Sparkles, Users, Briefcase, Building, DollarSign } from "lucide-react";
 import TotalSummaryChart from "./TotalSummaryChart";

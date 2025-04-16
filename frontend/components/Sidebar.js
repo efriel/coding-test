@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState } from "react";
 import { Home as Dashboard, Users, Cpu } from "lucide-react";
 

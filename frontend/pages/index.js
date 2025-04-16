@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState, useEffect } from "react";
 import Sidebar from "../components/Sidebar";
 import QuestionForm from "../components/QuestionForm";
