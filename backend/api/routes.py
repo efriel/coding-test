@@ -11,10 +11,51 @@ dummy_path = Path(__file__).resolve().parent.parent / "data" / "dummyData.json"
 with open(dummy_path, "r") as f:
     DUMMY_DATA = json.load(f)
 
+"""
+Routes for the FastAPI application.
+
+This module defines the API endpoints for interacting with sales representatives
+and generating sales summaries.
+
+Endpoints:
+- /api/sales-reps: Retrieve a list of sales representatives and their details.
+- /api/sales-summary: Generate a summary of sales data with optional filters.
+"""
+
 @router.get("/api/sales-reps")
 def get_sales_reps():
     """
-    Returns a list of sales representatives with their details.
+    Provides a list of sales representatives with their details.
+
+    Returns:
+        - A list of sales representatives with their details.
+
+    Example Response:
+    {
+        "salesReps": [
+            {
+                "name": "Alice",
+                "role": "Senior Sales Executive",
+                "region": "North America",
+                "skills": ["Negotiation", "CRM", "Client Relations"],
+                "deals": [
+                    { "client": "Omega Inc", "value": 85000, "status": "Closed Lost" }
+                ],
+                "clients": [
+                    { "name": "Gamma Inc", "industry": "Tech", "contact": "info@gammainc.com" },
+                    { "name": "Delta LLC", "industry": "Finance", "contact": "support@deltallc.com" }
+                ]
+            },
+            {
+                "name": "Bob",
+                "role": "Sales Representative",
+                "region": "Europe",
+                "skills": ["Lead Generation", "Presentation", "Negotiation"],
+                "deals": [],
+                "clients": []
+            }
+        ]
+    }
     """
     sales_reps = [
         {
@@ -46,6 +87,11 @@ def get_sales_summary(
     """
     Provides a summary of sales representatives and their activities.
 
+    Parameters:
+    - region (str, optional): Filter sales data by region.
+    - role (str, optional): Filter sales data by role.
+    - status (str, optional): Filter sales data by deal status.
+
     Returns:
         - totalSalesReps (int): Total number of sales representatives.
         - filteredSalesReps (int): Number of sales representatives after applying filters.
@@ -57,6 +103,23 @@ def get_sales_summary(
         - totalValue (int): Total value of all deals.
         - statusBreakdown (dict): Breakdown of deal statuses (e.g., Closed Won, In Progress).
         - industries (list): Unique industries of the clients.
+
+        Example Response:
+    {
+        "totalSalesReps": 5,
+        "roles": ["Account Manager", "Sales Representative"],
+        "regions": ["North America", "Europe"],
+        "uniqueSkills": ["Negotiation", "CRM"],
+        "totalDeals": 15,
+        "totalClients": 10,
+        "totalValue": 1235000,
+        "statusBreakdown": {
+            "Closed Won": 5,
+            "In Progress": 5,
+            "Closed Lost": 5
+        },
+        "industries": ["Tech", "Finance", "Healthcare"]
+    }
     """
     all_reps = DUMMY_DATA["salesReps"]
     filtered_reps = all_reps
