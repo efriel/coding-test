@@ -43,7 +43,7 @@ export default function SalesCards({ salesReps, loading }) {
                       {client.name} ({client.industry}){" "}
                       <a
                         href={`mailto:${client.contact}`}
-                        className="text-[#8768f9]"
+                        className="text-violet-300 hover:underline"
                       >
                         {client.contact}
                       </a>
