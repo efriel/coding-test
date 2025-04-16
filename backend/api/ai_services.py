@@ -1,18 +1,30 @@
+"""
+AI Services Module
+
+This module provides functionality for interacting with various AI models, including OpenAI, Gemini, Llama, Solar, 
+and custom AI services. It handles the selection of the appropriate AI model based on the configuration or user input 
+and processes the question using the selected model.
+
+Key Functions:
+- `ask_ai`: Routes the question to the appropriate AI model and returns the response.
+
+Dependencies:
+- Configuration settings for default AI model selection.
+- Utility functions for loading sales data and building prompts.
+- Service modules for interacting with specific AI models.
+"""
+
 from config.settings import settings
 from utils.data_loader import load_sales_data
 from utils.prompt_builder import build_sales_prompt
 
 from services.openai_service import ask_openai
 from services.gemini_service import ask_gemini
-from services.llama_service import ask_llama
-from services.solar_service import ask_solar
 from services.custom_service import ask_custom_model
 
 MODEL_HANDLERS = {
     "openai": ask_openai,
     "gemini": ask_gemini,
-    "llama": ask_llama,
-    "solar": ask_solar,
     "custom": ask_custom_model,
 }
 

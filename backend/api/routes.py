@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 from typing import Optional, List
 from models.schemas import AIRequest, AIResponse
+from config.settings import settings
 import json
 from pathlib import Path
 from api.ai_services import ask_ai
@@ -173,7 +174,8 @@ async def ai_endpoint(payload: AIRequest):
     Accepts a user question and returns a placeholder AI response.
     """
     user_question = payload.question
-    selected_model = payload.model
+    selected_model = payload.model or settings.AI_DEFAULT_MODEL
 
     ai_response = ask_ai(user_question, selected_model)
     return {"answer": ai_response}
+    #return {"answer": f"This is a placeholder answer to your question: {user_question}"}

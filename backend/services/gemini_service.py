@@ -2,7 +2,7 @@ import requests
 from config.settings import settings
 
 def ask_gemini(prompt):
-    url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent"
+    url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"
     headers = {"Content-Type": "application/json"}
     params = {"key": settings.GEMINI_API_KEY}
     data = {"contents": [{"parts": [{"text": prompt}]}]}
