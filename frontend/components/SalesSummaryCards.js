@@ -1,14 +1,20 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Sparkles, Users, Briefcase, Building, DollarSign } from "lucide-react";
 
 export default function SalesSummaryCards({ summary, loading, onFilterChange }) {
   const [filters, setFilters] = useState({ region: "", role: "", status: "" });
+  const [isLoading, setIsLoading] = useState(loading); // Local loading state
+
+  useEffect(() => {
+    setIsLoading(loading); // Sync local loading state with the parent component's loading prop
+  }, [loading]);
 
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
     const updatedFilters = { ...filters, [name]: value };
     setFilters(updatedFilters);
-    onFilterChange(updatedFilters);
+    setIsLoading(true); // Set loading state when filters are applied
+    onFilterChange(updatedFilters); // Trigger the parent filter change handler
   };
 
   const filterOptions = [
@@ -54,30 +60,31 @@ export default function SalesSummaryCards({ summary, loading, onFilterChange }) 
 
   return (
     <div className="p-6 bg-[linear-gradient(to_bottom,_#0f0f0f,_#111111)] rounded-3xl shadow-2xl space-y-8">
-      {/* Filter Section */}
-      <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-8">
-        {filterOptions.map(({ label, name, values }) => (
-          <div key={name}>
-            <label className="block text-sm font-medium text-gray-400 mb-1">{label}</label>
-            <select
-              name={name}
-              value={filters[name]}
-              onChange={handleFilterChange}
-              className="w-full bg-gray-800 text-white p-2.5 rounded-xl focus:ring-2 focus:ring-violet-500 transition duration-150"
-            >
-              <option value="">All {label}s</option>
-              {values.map((val, idx) => (
-                <option key={idx} value={val}>
-                  {val}
-                </option>
-              ))}
-            </select>
-          </div>
-        ))}
-      </div>
-
+    {/* Filter Section */}
+    {summary ? (
+        <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-8">
+            {filterOptions.map(({ label, name, values }) => (
+            <div key={name}>
+                <label className="block text-sm font-medium text-gray-400 mb-1">{label}</label>
+                <select
+                name={name}
+                value={filters[name]}
+                onChange={handleFilterChange}
+                className="w-full bg-gray-800 text-white p-2.5 rounded-xl focus:ring-2 focus:ring-violet-500 transition duration-150"
+                >
+                <option value="">All {label}s</option>
+                {values.map((val, idx) => (
+                    <option key={idx} value={val}>
+                    {val}
+                    </option>
+                ))}
+                </select>
+            </div>
+            ))}
+        </div>
+    ) : null}
       {/* Summary Cards */}
-      {loading ? (
+      {isLoading || !summary ? (
         <div className="text-center text-gray-400 animate-pulse py-12">
           <Sparkles className="mx-auto mb-3 animate-spin text-violet-500" size={32} />
           Loading insights...
