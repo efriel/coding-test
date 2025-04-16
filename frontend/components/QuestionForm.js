@@ -1,18 +1,13 @@
 import { useState } from "react";
-import ResponseCards from "./ResponseCards";
+import { askAI } from "../api/ai";
 
-const QuestionForm = ({ setHideContent, setAnswer }) => {
+const QuestionForm = ({ setHideContent, setAnswer, selectedModel }) => {
   const [question, setQuestion] = useState("");
 
   const handleAskQuestion = async () => {
     if (!question.trim()) return;
     try {
-      const response = await fetch("http://localhost:8000/api/ai", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ question }),
-      });
-      const data = await response.json();
+      const data = await askAI(question, selectedModel);
       setAnswer(data.answer);
       setHideContent(true);
       setQuestion("");

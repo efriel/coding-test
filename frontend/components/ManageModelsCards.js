@@ -2,9 +2,8 @@ import { useState } from "react";
 import { CheckCircle, Cpu } from "lucide-react";
 
 const availableModels = [
-  { id: "gpt-3.5", name: "GPT-3.5", description: "Fast and affordable" },
-  { id: "gpt-4", name: "GPT-4", description: "Smarter and more capable" },
-  { id: "claude", name: "Claude", description: "Anthropic's assistant" },
+  { id: "openai", name: "OpenAI", description: "Fast and accurate by OpenAI" },
+  { id: "gemini", name: "Gemini", description: "Google's AI model" },
   { id: "custom", name: "Custom AI", description: "Your fine-tuned model" },
 ];
 

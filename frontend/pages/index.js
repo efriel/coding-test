@@ -14,6 +14,7 @@ export default function Home() {
   const [loadingSummary, setLoadingSummary] = useState(true);
   const [hideContent, setHideContent] = useState(false);
   const [answer, setAnswer] = useState("");
+  const [selectedModel, setSelectedModel] = useState("gemini");
 
   const fetchSalesSummary = (filters = {}) => {
     setLoadingSummary(true);
@@ -69,7 +70,12 @@ export default function Home() {
       case "Sales Representative":
         return <SalesCards salesReps={salesReps} loading={loadingSalesReps} />;
       case "Manage Models":
-        return <ManageModelsCards />;
+        return (
+          <ManageModelsCards
+            selectedModel={selectedModel}
+            onSelect={setSelectedModel}
+          />
+        );
       default:
         return null;
     }
@@ -93,7 +99,11 @@ export default function Home() {
           <h2 className="text-xl font-bold text-center text-violet-400 mb-4">
             Ask a Question (AI Endpoint)
           </h2>
-          <QuestionForm setHideContent={setHideContent} setAnswer={setAnswer} />
+          <QuestionForm 
+            setHideContent={setHideContent} 
+            setAnswer={setAnswer} 
+            selectedModel={selectedModel}
+          />
         </section>
       </main>
     </div>

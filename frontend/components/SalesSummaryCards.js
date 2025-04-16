@@ -59,10 +59,10 @@ export default function SalesSummaryCards({ summary, loading, onFilterChange }) 
   ];
 
   return (
-    <div className="p-6 bg-[linear-gradient(to_bottom,_#0f0f0f,_#111111)] rounded-3xl shadow-2xl space-y-8">
+    <>
     {/* Filter Section */}
     {summary ? (
-        <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-8">
+        <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-8 mb-4">
             {filterOptions.map(({ label, name, values }) => (
             <div key={name}>
                 <label className="block text-sm font-medium text-gray-400 mb-1">{label}</label>
@@ -91,7 +91,7 @@ export default function SalesSummaryCards({ summary, loading, onFilterChange }) 
         </div>
       ) : (
         <>
-          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4 bg-[linear-gradient(to_bottom,_#0f0f0f,_#111111)]">
             {totalSummary.map(({ title, value, icon: Icon }, idx) => (
               <div
                 key={idx}
@@ -106,7 +106,7 @@ export default function SalesSummaryCards({ summary, loading, onFilterChange }) 
             ))}
           </div>
 
-          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-5 mt-6">
+          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-5 mt-6 h-[50%]">
             <BreakdownCard title="Roles" list={summary.roles} />
             <BreakdownCard title="Regions" list={summary.regions} />
             <BreakdownCard title="Industries" list={summary.industries} />
@@ -115,19 +115,19 @@ export default function SalesSummaryCards({ summary, loading, onFilterChange }) 
           </div>
         </>
       )}
-    </div>
+    </>
   );
 }
 
 function BreakdownCard({ title, list, isKeyValue = false }) {
   return (
-    <div className="p-5 rounded-2xl border border-gray-800 hover:bg-gray-900 transition-all duration-200 shadow-lg">
+    <div className="p-5 rounded-2xl border border-gray-800 hover:bg-gray-900 transition-all duration-200 shadow-lg max-h-[80%] overflow-auto scrollbar-hide bg-[linear-gradient(to_bottom,_#0f0f0f,_#111111)]">
       <h4 className="text-white text-sm font-semibold mb-3">{title}</h4>
       <ul className="text-sm text-gray-300 space-y-1 overflow-auto pr-2 scrollbar-thin scrollbar-thumb-gray-600">
         {isKeyValue
           ? list.map(([key, value], i) => (
               <li key={i} className="flex justify-between">
-                <span>{key}</span>
+                <span>{key}</span> 
                 <span className="font-semibold text-violet-300">{value}</span>
               </li>
             ))
