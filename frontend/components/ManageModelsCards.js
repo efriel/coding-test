@@ -4,7 +4,7 @@ import { CheckCircle, Cpu } from "lucide-react";
 const availableModels = [
   { id: "openai", name: "OpenAI", description: "Fast and accurate by OpenAI" },
   { id: "gemini", name: "Gemini", description: "Google's AI model" },
-  { id: "custom", name: "Custom AI", description: "Your fine-tuned model" },
+  { id: "custom", name: "Custom InterOpera.AI", description: "Available Soon" },
 ];
 
 export default function ManageModelsCards({ selectedModel, onSelect }) {

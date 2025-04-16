@@ -90,10 +90,10 @@ export default function Home() {
         </h1>
 
         {/* Render ResponseCards if answer is set */}
-        {answer && <ResponseCards answer={answer} />}
+        {answer && <ResponseCards answer={answer} setAnswer={setAnswer} />}
 
         {/* Render main content if hideContent is false */}
-        {!hideContent && renderContent()}
+        {(!hideContent || !answer) && renderContent()}
 
         <section className="mt-auto p-4">
           <h2 className="text-xl font-bold text-center text-violet-400 mb-4">

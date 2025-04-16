@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Sparkles, Users, Briefcase, Building, DollarSign } from "lucide-react";
+import TotalSummaryChart from "./TotalSummaryChart";
 
 export default function SalesSummaryCards({ summary, loading, onFilterChange }) {
   const [filters, setFilters] = useState({ region: "", role: "", status: "" });
@@ -58,8 +59,12 @@ export default function SalesSummaryCards({ summary, loading, onFilterChange }) 
     },
   ];
 
+  const totalSummaryExcludeRevenue = totalSummary.filter(
+    (item) => item.title !== "Total Revenue"
+  );
+
   return (
-    <>
+    <div className="p-6 bg-gradient-to-b from-[#0f0f0f] to-[#111111] rounded-2xl shadow-xl space-y-6 ">
     {/* Filter Section */}
     {summary ? (
         <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-8 mb-4">
@@ -90,7 +95,7 @@ export default function SalesSummaryCards({ summary, loading, onFilterChange }) 
           Loading insights...
         </div>
       ) : (
-        <>
+        <div className="bg-gradient-to-b from-[#0f0f0f] to-[#111111] rounded-2xl shadow-xl space-y-6">
           <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4 bg-[linear-gradient(to_bottom,_#0f0f0f,_#111111)]">
             {totalSummary.map(({ title, value, icon: Icon }, idx) => (
               <div
@@ -105,23 +110,24 @@ export default function SalesSummaryCards({ summary, loading, onFilterChange }) 
               </div>
             ))}
           </div>
-
-          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-5 mt-6 h-[50%]">
+          
+          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-7 mt-6 h-[50%]">
+            <TotalSummaryChart data={totalSummaryExcludeRevenue} statusBreakdown={summary?.statusBreakdown} />
             <BreakdownCard title="Roles" list={summary.roles} />
             <BreakdownCard title="Regions" list={summary.regions} />
             <BreakdownCard title="Industries" list={summary.industries} />
             <BreakdownCard title="Unique Skills" list={summary.uniqueSkills} />
             <BreakdownCard title="Status Breakdown" list={Object.entries(summary.statusBreakdown)} isKeyValue />
           </div>
-        </>
+        </div>
       )}
-    </>
+    </div>
   );
 }
 
 function BreakdownCard({ title, list, isKeyValue = false }) {
   return (
-    <div className="p-5 rounded-2xl border border-gray-800 hover:bg-gray-900 transition-all duration-200 shadow-lg max-h-[80%] overflow-auto scrollbar-hide bg-[linear-gradient(to_bottom,_#0f0f0f,_#111111)]">
+    <div className="p-5 rounded-2xl border border-gray-800 hover:bg-gray-900 transition-all duration-200 shadow-lg max-h-[80%] overflow-auto scrollbar-hide">
       <h4 className="text-white text-sm font-semibold mb-3">{title}</h4>
       <ul className="text-sm text-gray-300 space-y-1 overflow-auto pr-2 scrollbar-thin scrollbar-thumb-gray-600">
         {isKeyValue
