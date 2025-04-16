@@ -178,4 +178,3 @@ async def ai_endpoint(payload: AIRequest):
 
     ai_response = ask_ai(user_question, selected_model)
     return {"answer": ai_response}
-    #return {"answer": f"This is a placeholder answer to your question: {user_question}"}
