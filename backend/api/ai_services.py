@@ -29,6 +29,20 @@ MODEL_HANDLERS = {
 }
 
 def ask_ai(question, model=None):
+    """
+    Routes the question to the appropriate AI model and returns the response.
+
+    Parameters:
+    - question (str): The question to be processed by the AI model.
+    - model (str, optional): The AI model to use. If not provided, the default model from settings is used.
+
+    Returns:
+    - str: The response from the selected AI model, or an error message if the model is invalid.
+
+    Example Usage:
+    >>> response = ask_ai("What is the total revenue?", model="openai")
+    >>> print(response)
+    """
     model = model or settings.AI_DEFAULT_MODEL
     sales_data = load_sales_data()
     prompt = build_sales_prompt(question, sales_data)
