@@ -3,6 +3,7 @@ from typing import Optional, List
 from models.schemas import AIRequest, AIResponse
 import json
 from pathlib import Path
+from api.ai_services import ask_ai
 
 router = APIRouter()
 
@@ -170,10 +171,9 @@ def get_sales_summary(
 async def ai_endpoint(payload: AIRequest):
     """
     Accepts a user question and returns a placeholder AI response.
-    (Optionally integrate a real AI model or external service here.)
     """
     user_question = payload.question
-    
-    # Placeholder logic: echo the question or generate a simple response
-    # Replace with real AI logic as desired (e.g., call to an LLM).
-    return {"answer": f"This is a placeholder answer to your question: {user_question}"}
+    selected_model = payload.model
+
+    ai_response = ask_ai(user_question, selected_model)
+    return {"answer": ai_response}
