@@ -239,10 +239,6 @@ AI_DEFAULT_MODEL=custom
 
 ---
 
-**Good luck, and have fun building your Sales Dashboard!**
-
----
-
 ## Review Checklist
 
 This section outlines the key areas to focus on while reviewing the implementation:
@@ -270,3 +266,10 @@ This section outlines the key areas to focus on while reviewing the implementati
 ---
 
 This checklist ensures a thorough review of the project and highlights areas for potential feedback or suggestions.
+
+---
+
+**Have a nice day!**
+
+---
+
