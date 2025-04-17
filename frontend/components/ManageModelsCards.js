@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { CheckCircle, Cpu } from "lucide-react";
+import { CheckCircle, Cpu, UploadCloud, Link as LinkIcon } from "lucide-react";
 
 const availableModels = [
   { id: "openai", name: "OpenAI", description: "Fast and accurate by OpenAI" },
@@ -7,14 +7,38 @@ const availableModels = [
   { id: "custom", name: "Custom InterOpera.AI", description: "Available Soon" },
 ];
 
-export default function ManageModelsCards({ selectedModel = "no-selection", onSelect }) {
+export default function ManageModelsCards({ 
+  selectedModel = "no-selection",
+  onSelect,
+  onDataSourceChange, 
+}) {
   const [currentModel, setCurrentModel] = useState(selectedModel);
+  const [endpointUrl, setEndpointUrl] = useState("");
 
   const handleSelect = (modelId) => {
     setCurrentModel(modelId);
     if (onSelect) {
-      console.log("onSelect called with:", modelId);  // Debugging line
       onSelect(modelId);
+    }
+  };
+
+  const handleUrlChange = (e) => {
+    const url = e.target.value;
+    setEndpointUrl(url);
+    if (onDataSourceChange) {
+      onDataSourceChange({ type: "url", value: url });
+    }
+  };
+
+  const handleFileUpload = (e) => {
+    const file = e.target.files[0];
+    if (file && onDataSourceChange) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const content = reader.result;
+        onDataSourceChange({ type: "file", name: file.name, content });
+      };
+      reader.readAsText(file);
     }
   };
 
@@ -50,6 +74,36 @@ export default function ManageModelsCards({ selectedModel = "no-selection", onSe
             </div>
           );
         })}
+      </div>
+
+      <div className="pt-6 space-y-4">
+        <label className="block text-sm text-gray-300 font-medium flex items-center gap-2">
+          <LinkIcon className="w-4 h-4 text-violet-300" />
+          Enter Data Source URL
+        </label>
+        <input
+          type="url"
+          placeholder="https://example.com/data.json"
+          className="w-full px-4 py-2 bg-gray-800 text-white rounded-xl border border-gray-700 focus:outline-none focus:ring-2 focus:ring-violet-500"
+          value={endpointUrl}
+          onChange={handleUrlChange}
+        />
+
+        <label className="block text-sm text-gray-300 font-medium mt-4 flex items-center gap-2">
+          <UploadCloud className="w-4 h-4 text-violet-300" />
+          Upload JSON, XML, or CSV
+        </label>
+        <input
+          type="file"
+          accept=".json,.xml,.csv"
+          className="block w-full text-sm text-gray-300
+            file:mr-4 file:py-2 file:px-4
+            file:rounded-lg file:border-0
+            file:text-sm file:font-semibold
+            file:bg-violet-600 file:text-white
+            hover:file:bg-violet-500"
+          onChange={handleFileUpload}
+        />
       </div>
     </div>
   );
